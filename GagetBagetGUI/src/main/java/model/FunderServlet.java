@@ -14,7 +14,7 @@ public class FunderServlet {
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			//Provide the correct details: DBServer/DBName, username, password
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test/fundergui?useTimezone=true&serverTimezone=UTC", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?useTimezone=true&serverTimezone=UTC", "root", "");
 		}
 		catch (Exception e)
 		{e.printStackTrace();}
@@ -77,7 +77,7 @@ public class FunderServlet {
 					"<th>Description</th>" +
 					"<th>Update</th><th>Remove</th></tr>";
 			
-			String query = "select * from funders";
+			String query = "select * from fundergui";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			
