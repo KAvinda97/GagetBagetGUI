@@ -12,16 +12,14 @@ public class FunderServlet {
 		Connection con = null;
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			//Provide the correct details: DBServer/DBName, username, password
 			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?useTimezone=true&serverTimezone=UTC", "root", "");
 		}
 		catch (Exception e)
 		{e.printStackTrace();}
-		
 		return con;
 	}
-	
 	
 	public String insertFunder(String name, String email, String tel, String gender, String donation, String desc)
 	{
@@ -52,12 +50,13 @@ public class FunderServlet {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
+			String newFunder = readFunders(); 
+			output = "{\"status\":\"success\", \"data\": \"" + newFunder + "\"}";
 		}
 		catch (Exception e)
 		{
-			output = "Error while inserting the funder.";
-			System.err.println(e.getMessage());
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the funder.\"}";
+			 System.err.println(e.getMessage());
 		}
 		return output;
 	}
@@ -125,9 +124,9 @@ public class FunderServlet {
 		try
 		{
 			Connection con = connect();
-			
 			if (con == null)
-			{return "Error while connecting to the database for updating."; }
+			{
+				return "Error while connecting to the database for updating."; }
 			
 			// create a prepared statement
 			String query = "UPDATE fundergui SET funderName=?,funderEmail=?,funderTel=?,funderGender=?,funderDonation=?,funderDesc=? WHERE funderID=?";
@@ -146,12 +145,13 @@ public class FunderServlet {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			String newFunder = readFunders();
+			output = "{\"status\":\"success\", \"data\": \"" + newFunder + "\"}"; 
 		}
 		catch (Exception e)
 		{
-			output = "Error while updating the funder.";
-			System.err.println(e.getMessage());
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the funder.\"}"; 
+			 System.err.println(e.getMessage());
 		}
 		return output;
 		}
@@ -174,12 +174,13 @@ public class FunderServlet {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted successfully";
+			String newFunder = readFunders(); 
+			output = "{\"status\":\"success\", \"data\": \"" + newFunder + "\"}";
 		}
 		catch (Exception e)
 		{
-			output = "Error while deleting the funder.";
-			System.err.println(e.getMessage());
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the funder.\"}"; 
+			 System.err.println(e.getMessage());
 		}
 		return output;
 	}
