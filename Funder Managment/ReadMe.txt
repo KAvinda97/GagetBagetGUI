@@ -1,0 +1,1 @@
+fundergui table use for GagetBaget GUI frontend
